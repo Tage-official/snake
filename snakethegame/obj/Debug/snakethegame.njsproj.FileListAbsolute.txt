@@ -1,0 +1,3 @@
+C:\Users\Максимка\source\repos\snakethegame\snakethegame\obj\Debug\snakethegame.njsproj.AssemblyReference.cache
+C:\Users\Максимка\source\repos\snakethegame\snakethegame\obj\Debug\snakethegame.njsproj.CoreCompileInputs.cache
+C:\Users\Максимка\source\repos\snakethegame\snakethegame\bin\Microsoft.NodejsTools.WebRole.dll

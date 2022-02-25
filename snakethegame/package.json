@@ -1,0 +1,9 @@
+{
+  "name": "snakethegame",
+  "version": "0.0.0",
+  "description": "snakethegame",
+  "main": "server.js",
+  "author": {
+    "name": ""
+  }
+}
