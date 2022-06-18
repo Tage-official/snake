@@ -28,7 +28,32 @@ let ground = [
       y: 8,
       value: '@'
     }]
-    
+    var keypress = require('keypress');
+ 
+    // make `process.stdin` begin emitting "keypress" events
+    keypress(process.stdin);
+     
+    // listen for the "keypress" event
+    process.stdin.on('keypress', function (ch, key) {
+      if (key.name == 'escape') {
+        console.log('Exiting...')
+        process.exit();
+      }
+      if (key.name == 'w'){
+        dir='up';
+      }
+      if (key.name == 's'){
+        dir = 'down'
+      }
+      if (key.name == 'a'){
+        dir = 'left'
+      }
+      if (key.name == 'd'){
+        dir = 'right'
+      }
+    });
+    process.stdin.setRawMode(true);
+    process.stdin.resume();
 
   function displayFood(){
     foodXPos = Math.floor(Math.random() * (max - min) + min);
