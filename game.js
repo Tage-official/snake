@@ -27,6 +27,10 @@ let ground = [
       x: 8,
       y: 8,
       value: '@'
+    },{
+      x:9,
+      y:8,
+      value: '='
     }]
     var keypress = require('keypress');
  
@@ -39,16 +43,16 @@ let ground = [
         console.log('Exiting...')
         process.exit();
       }
-      if (key.name == 'w'){
-        dir='up';
+      if (key.name == 'w' && dir != 'down'){
+        dir = 'up';
       }
-      if (key.name == 's'){
+      if (key.name == 's' && dir != 'up'){
         dir = 'down'
       }
-      if (key.name == 'a'){
+      if (key.name == 'a' && dir != 'right'){
         dir = 'left'
       }
-      if (key.name == 'd'){
+      if (key.name == 'd' && dir != 'left'){
         dir = 'right'
       }
     });
@@ -65,43 +69,59 @@ let ground = [
         ground[foodYPos][foodXPos] = '1';
       }
   }
-  function movement() {
+  function movement() { 
     if ( snake[0].x!=0 && snake[0].x!=15 && snake[0].y!=0 && snake[0].y!=15){
       if (dir === 'left'){
         snake[0].x = snake[0].x-1
+        
       }
       if (dir === 'right'){
         snake[0].x = snake[0].x+1
+        
     }
       if (dir === 'up'){
         snake[0].y = snake[0].y-1
+        
     }
       if (dir === 'down'){
         snake[0].y = snake[0].y+1
+        
      }
-  }
+    }
+    else{
+      console.log('Gameover, exiting')
+      process.exit()
+    }
 }
   function displayMatrix() {
-    for( let i = 0; i< snake.length;++i) {
+    for( let i = 0; i < snake.length;++i) {
       if ( dir === 'left' ){
+        snake[i].x = snake[0].x+i
+        snake[i].y = snake[0].y
         ground[snake[0].y][snake[0].x] = snake[0].value;
-        ground[snake[0].y][snake[0].x+i] = snake[i].value;
-        ground[snake[0].y][snake[0].x+1] = ' '
-    }
+        ground[snake[i].y][snake[i].x] = snake[i].value;
+        ground[snake[i].y][snake[i].x+1] = ' '
+      }
       if ( dir === 'right' ){
+        snake[i].x = snake[0].x-i
+        snake[i].y = snake[0].y
         ground[snake[0].y][snake[0].x] = snake[0].value;
-        ground[snake[0].y][snake[0].x-i] = snake[i].value;
-        ground[snake[0].y][snake[0].x-1] = ' '
+        ground[snake[i].y][snake[i].x] = snake[i].value;
+        ground[snake[i].y][snake[i].x-1] = ' '
       }
       if ( dir === 'up' ){
+        snake[i].x = snake[0].x
+        snake[i].y = snake[0].y+i
         ground[snake[0].y][snake[0].x] = snake[0].value;
-        ground[snake[0].y+i][snake[0].x] = snake[i].value;
-        ground[snake[0].y+1][snake[0].x] = ' '
+        ground[snake[i].y][snake[i].x] = snake[i].value;
+        ground[snake[i].y+1][snake[i].x] = ' '
       }
       if ( dir === 'down' ){
+        snake[i].x = snake[0].x
+        snake[i].y = snake[0].y-i
         ground[snake[0].y][snake[0].x] = snake[0].value;
-        ground[snake[0].y-i][snake[0].x] = snake[i].value;
-        ground[snake[0].y-1][snake[0].x] = ' '
+        ground[snake[i].y][snake[i].x] = snake[i].value;
+        ground[snake[i].y-1][snake[i].x] = ' '
       }
     }
       ground.forEach((item) => {
@@ -123,5 +143,6 @@ let ground = [
     displayMatrix()
     displayFood()
     eat()
-setInterval(movement,1000)
-setInterval(displayMatrix,1000)
+setInterval(eat,500)
+setInterval(movement,500)
+setInterval(displayMatrix,500)
