@@ -30,7 +30,11 @@ let ground = [
     },{
       x:9,
       y:8,
-      value: '='
+      value: '@'
+    },{
+      x:10,
+      y:8,
+      value: '@'
     }]
     var keypress = require('keypress');
  
@@ -72,20 +76,16 @@ let ground = [
   function movement() { 
     if ( snake[0].x!=0 && snake[0].x!=15 && snake[0].y!=0 && snake[0].y!=15){
       if (dir === 'left'){
-        snake[0].x = snake[0].x-1
-        
+        snake[0].x = snake[0].x-1 
       }
       if (dir === 'right'){
         snake[0].x = snake[0].x+1
-        
     }
       if (dir === 'up'){
         snake[0].y = snake[0].y-1
-        
     }
       if (dir === 'down'){
         snake[0].y = snake[0].y+1
-        
      }
     }
     else{
@@ -94,38 +94,18 @@ let ground = [
     }
 }
   function displayMatrix() {
-    for( let i = 0; i < snake.length;++i) {
-      if ( dir === 'left' ){
-        snake[i].x = snake[0].x+i
-        snake[i].y = snake[0].y
-        ground[snake[0].y][snake[0].x] = snake[0].value;
+    for( let i = snake.length-2; i>=0 ; i--) {
+      if ( snake[0].x == snake[i].x && snake[0].y == snake[i].y){
+        console.log('Gameover...')
+        process.exit
+      } 
+        snake[i+1] = { ...snake[i] }
         ground[snake[i].y][snake[i].x] = snake[i].value;
-        ground[snake[i].y][snake[i].x+1] = ' '
       }
-      if ( dir === 'right' ){
-        snake[i].x = snake[0].x-i
-        snake[i].y = snake[0].y
+      movement()
         ground[snake[0].y][snake[0].x] = snake[0].value;
-        ground[snake[i].y][snake[i].x] = snake[i].value;
-        ground[snake[i].y][snake[i].x-1] = ' '
-      }
-      if ( dir === 'up' ){
-        snake[i].x = snake[0].x
-        snake[i].y = snake[0].y+i
-        ground[snake[0].y][snake[0].x] = snake[0].value;
-        ground[snake[i].y][snake[i].x] = snake[i].value;
-        ground[snake[i].y+1][snake[i].x] = ' '
-      }
-      if ( dir === 'down' ){
-        snake[i].x = snake[0].x
-        snake[i].y = snake[0].y-i
-        ground[snake[0].y][snake[0].x] = snake[0].value;
-        ground[snake[i].y][snake[i].x] = snake[i].value;
-        ground[snake[i].y-1][snake[i].x] = ' '
-      }
-    }
       ground.forEach((item) => {
-        const groundstr = item.toString().split(',').join(' ');
+        let groundstr = item.toString().split(',').join(' ');
         console.log(groundstr);
       });
     };
@@ -136,13 +116,13 @@ let ground = [
       snake.push({
       x: snake[0].x,
       y: snake[0].y,
-      value: '='
+      value: '@'
          });
        }
-      }
-    displayMatrix()
-    displayFood()
-    eat()
+      let scores = snake.length
+      console.log('Your scores: '+scores)
+    }
+displayFood()
 setInterval(eat,500)
-setInterval(movement,500)
+//setInterval(movement,500)
 setInterval(displayMatrix,500)
